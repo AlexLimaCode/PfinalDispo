@@ -1,6 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'scanBarCode.dart';
+import 'navega.dart';
 
-void main() => runApp(scanBarCode());
+void main() => runApp(navega());
