@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344090826585",
+    "project_id": "la-de-la-esquina",
+    "storage_bucket": "la-de-la-esquina.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344090826585:android:285e59c0d37987d2b69e48",
+        "android_client_info": {
+          "package_name": "com.example.proyectofinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344090826585-cjbeg2ab6ktm9qmfargo7pnjcut13dps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUwmpQtSuizCUqJfkEGyboSr2fQIfbPNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344090826585-cjbeg2ab6ktm9qmfargo7pnjcut13dps.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

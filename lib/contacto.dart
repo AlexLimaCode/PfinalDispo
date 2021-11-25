@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:proyectofinal/navigationDrawer.dart';
+import 'aProducto.dart';
 
 class contacto extends StatelessWidget {
   static const String nombreRuta = '/contacto';

@@ -5,13 +5,14 @@ import 'package:proyectofinal/navigationDrawer.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'inicio.dart';
+import 'venta.dart';
 import 'contacto.dart';
-import 'perfil.dart';
+import 'aProveedor.dart';
 import 'rutas.dart';
 import 'scanBarCode.dart';
+import 'aProducto.dart';
 
-class inicio extends StatelessWidget {
+class venta extends StatelessWidget {
   static const String nombreRuta = '/inicio';
   @override
   Widget build(BuildContext context) {

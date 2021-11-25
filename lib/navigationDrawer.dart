@@ -15,19 +15,24 @@ class navigationDrawer extends StatelessWidget {
           createDrawerHeader(),
           createDrawerBodyItem(
               icon: Icons.home,
-              text: ("INICIO"),
+              text: ("Ventas"),
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutainicio)),
-          createDrawerBodyItem(
-              icon: Icons.contact_mail,
-              text: ("CONTACTO"),
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutacontacto)),
+                  Navigator.pushReplacementNamed(context, rutas.rutaVenta)),
           createDrawerBodyItem(
               icon: Icons.person_add,
-              text: ("Perfil"),
+              text: ("Alta Proveedor"),
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutaperfil)),
+                  Navigator.pushReplacementNamed(context, rutas.rutaProveedor)),
+          createDrawerBodyItem(
+              icon: Icons.face,
+              text: ("Alta Producto"),
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, rutas.rutaProducto)),
+          createDrawerBodyItem(
+              icon: Icons.contact_mail,
+              text: ("Contacto"),
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, rutas.rutacontacto)),
         ],
       ),
     );

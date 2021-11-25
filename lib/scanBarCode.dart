@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'rutas.dart';
 import 'contacto.dart';
-import 'inicio.dart';
+import 'venta.dart';
 import 'navigationDrawer.dart';
-import 'perfil.dart';
+import 'aProveedor.dart';
 
 class scanBarCode extends StatefulWidget {
   @override
@@ -68,9 +68,9 @@ class _scanBarCodeState extends State<scanBarCode> {
         }),
       ),
       routes: {
-        rutas.rutainicio: (context) => inicio(),
+        rutas.rutaVenta: (context) => venta(),
         rutas.rutacontacto: (context) => contacto(),
-        rutas.rutaperfil: (context) => perfil(),
+        rutas.rutaProveedor: (context) => proveedor(),
       },
     );
   }
