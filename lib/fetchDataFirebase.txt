@@ -1,0 +1,15 @@
+Future getProveedores() async {
+    try {
+      var provedores = await _proveedores.get();
+      itemsProveedor.clear();
+      print("Aqui");
+      print('Manda  = ${provedores.size}');
+      provedores.docs.forEach((element) {
+        itemsProveedor.add(element["nombre"]);
+      });
+      print(itemsProveedor);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }

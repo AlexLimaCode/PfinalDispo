@@ -1,6 +1,7 @@
-// ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_literals_to_create_immutables
+// ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_literals_to_create_immutables, unnecessary_new
 
 import 'package:flutter/material.dart';
+import 'package:proyectofinal/aProducto.dart';
 import 'rutas.dart';
 import 'createDrawerHeader.dart';
 import 'createDrawerBodyItem.dart';
@@ -27,7 +28,9 @@ class navigationDrawer extends StatelessWidget {
               icon: Icons.face,
               text: ("Alta Producto"),
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutaProducto)),
+                  // Navigator.pushReplacementNamed(context, rutas.rutaProducto)),
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => producto()))),
           createDrawerBodyItem(
               icon: Icons.contact_mail,
               text: ("Contacto"),

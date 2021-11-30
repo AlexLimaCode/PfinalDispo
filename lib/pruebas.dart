@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, camel_case_types, file_names, deprecated_member_use, unnecessary_const, prefer_final_fields, avoid_print, unnecessary_brace_in_string_interps
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, camel_case_types, file_names, deprecated_member_use, unnecessary_const, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:proyectofinal/navigationDrawer.dart';
@@ -6,13 +6,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 
-class proveedor extends StatelessWidget {
-  static const String nombreRuta = '/proveedor';
+class producto extends StatelessWidget {
+  static const String nombreRuta = '/producto';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alta de Proveedor'),
+        title: Text('Alta de Producto'),
       ),
       drawer: navigationDrawer(),
       body: MyCustomForm(),
@@ -28,7 +28,6 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class. This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nombrectr = new TextEditingController();
@@ -79,14 +78,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                       if (action == 'create') {
                         // Persist a new product to Firestore
                         await _proveedores
-                            .add({"nombre": nombre, "telefono": telefono});
+                            .add({"nombre": nombre, "precio": telefono});
                       }
 
                       if (action == 'update') {
                         // Update the product
                         await _proveedores
                             .doc(documentSnapshot!.id)
-                            .update({"nombre": nombre, "telefono": telefono});
+                            .update({"nombre": nombre, "precio": telefono});
                       }
 
                       // Clear the text fields

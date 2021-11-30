@@ -17,7 +17,7 @@ class scanBarCode extends StatefulWidget {
 }
 
 class _scanBarCodeState extends State<scanBarCode> {
-  String _scanBarcode = 'Unknown';
+  String _scanBarcode = 'No ingresado';
 
   @override
   void initState() {
@@ -61,8 +61,8 @@ class _scanBarCodeState extends State<scanBarCode> {
                   children: <Widget>[
                     ElevatedButton(
                         onPressed: () => scanBarcodeNormal(),
-                        child: Text('Start barcode scan')),
-                    Text('Scan result : $_scanBarcode\n',
+                        child: Text('Escanear QR')),
+                    Text('Producto : $_scanBarcode\n',
                         style: TextStyle(fontSize: 20))
                   ]));
         }),

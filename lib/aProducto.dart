@@ -5,6 +5,8 @@ import 'package:proyectofinal/navigationDrawer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'scanBarCode.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class producto extends StatelessWidget {
   static const String nombreRuta = '/producto';
@@ -31,18 +33,49 @@ class MyCustomForm extends StatefulWidget {
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nombrectr = new TextEditingController();
-  final TextEditingController _precio = new TextEditingController();
+  final TextEditingController _precioCompra = new TextEditingController();
+  final TextEditingController _precioVenta = new TextEditingController();
+  List itemsProveedor = [];
   String dropdownValue = 'One';
+  String _scanBarcode = 'No ingresado';
+  CollectionReference _productos =
+      FirebaseFirestore.instance.collection('productos');
   CollectionReference _proveedores =
       FirebaseFirestore.instance.collection('proveedores');
+  Future getProveedores() async {
+    try {
+      var provedores = await _proveedores.get();
+      itemsProveedor.clear();
+      print("Aqui");
+      print('Manda  = ${provedores.size}');
+      var i = 0;
+      provedores.docs.forEach((element) {
+        i = i + 1;
+        setState(() {
+          itemsProveedor.add(element["nombre"]);
+        });
+        print("valor de i = ${i}");
+      });
+      if (dropdownValue == 'One') {
+        setState(() {
+          dropdownValue = itemsProveedor[0];
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
     if (documentSnapshot != null) {
-      print("Hola");
       action = 'update';
       _nombrectr.text = documentSnapshot['nombre'];
-      _precio.text = documentSnapshot['telefono'].toString();
+      _precioCompra.text = documentSnapshot['precioCompra'].toString();
+      _precioVenta.text = documentSnapshot['precioVenta'].toString();
+      _scanBarcode = documentSnapshot['codigoBarra'].toString();
+      dropdownValue = documentSnapshot['proveedor'].toString();
     }
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -61,9 +94,17 @@ class MyCustomFormState extends State<MyCustomForm> {
                 TextField(
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: false),
-                  controller: _precio,
+                  controller: _precioCompra,
                   decoration: const InputDecoration(
-                    labelText: 'Telefono',
+                    labelText: 'Compra',
+                  ),
+                ),
+                TextField(
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: false),
+                  controller: _precioVenta,
+                  decoration: const InputDecoration(
+                    labelText: 'Venta',
                   ),
                 ),
                 const SizedBox(
@@ -73,24 +114,40 @@ class MyCustomFormState extends State<MyCustomForm> {
                   child: Text(action == 'create' ? 'Insertar' : 'Actualizar'),
                   onPressed: () async {
                     final String? nombre = _nombrectr.text;
-                    final int? telefono = int.tryParse(_precio.text);
-                    if (nombre != null && telefono != null) {
+                    final String? precioCompra = _precioCompra.text.toString();
+                    final String? precioVenta = _precioVenta.text.toString();
+                    final String? codigo = _scanBarcode.toString();
+                    final String? proveedor = dropdownValue.toString();
+                    if (nombre != null &&
+                        precioCompra != null &&
+                        precioVenta != null &&
+                        codigo != null) {
                       if (action == 'create') {
                         // Persist a new product to Firestore
-                        await _proveedores
-                            .add({"nombre": nombre, "precio": telefono});
+                        await _productos.add({
+                          "nombre": nombre,
+                          "precioCompra": precioCompra,
+                          "precioVenta": precioVenta,
+                          "proveedor": proveedor,
+                          "codigoBarra": codigo
+                        });
                       }
 
-                      if (action == 'update') {
-                        // Update the product
-                        await _proveedores
-                            .doc(documentSnapshot!.id)
-                            .update({"nombre": nombre, "precio": telefono});
-                      }
+                      // if (action == 'update') {
+                      //   // Update the product
+                      //   await _productos
+                      //       .doc(documentSnapshot!.id)
+                      //       .update({"nombre": nombre, "precioCompra": precioCompra, "precioVenta": precioVenta});
+                      // }
 
                       // Clear the text fields
                       _nombrectr.text = '';
-                      _precio.text = '';
+                      _precioCompra.text = '';
+                      _precioVenta.text = '';
+                      setState(() {
+                        _scanBarcode = 'No ingresado';
+                        dropdownValue = itemsProveedor[0];
+                      });
 
                       // Hide the bottom sheet
                       Navigator.of(context).pop();
@@ -103,9 +160,31 @@ class MyCustomFormState extends State<MyCustomForm> {
         });
   }
 
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
+    getProveedores();
     return Form(
       key: _formKey,
       child: Column(
@@ -121,36 +200,58 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            controller: _precio,
+            controller: _precioCompra,
             decoration: const InputDecoration(
-              icon: const Icon(Icons.phone),
-              hintText: 'Precio del producto',
+              icon: const Icon(Icons.money_off_csred_outlined),
+              hintText: 'Precio del producto en compra',
               labelText: 'Precio',
             ),
           ),
-          DropdownButton<String>(
-            value: dropdownValue,
-            icon: const Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: const TextStyle(color: Colors.deepPurple),
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
+          TextFormField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            controller: _precioVenta,
+            decoration: const InputDecoration(
+              icon: const Icon(Icons.money_rounded),
+              hintText: 'Precio del producto en venta',
+              labelText: 'Precio',
             ),
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownValue = newValue!;
-              });
-            },
-            items: <String>['One', 'Two', 'Free', 'Four']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
           ),
+          Center(
+            child: DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: const TextStyle(color: Colors.blue),
+              underline: Container(
+                height: 2,
+                color: Colors.blue,
+              ),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: itemsProveedor.map<DropdownMenuItem<String>>((value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
+          Container(
+              alignment: Alignment.center,
+              child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                        onPressed: () => scanBarcodeNormal(),
+                        child: Text('Escanear QR')),
+                    Text('Producto : $_scanBarcode\n',
+                        style: TextStyle(fontSize: 20))
+                  ])),
           Container(
               padding: const EdgeInsets.only(left: 150.0, top: 40.0),
               child: RaisedButton(
