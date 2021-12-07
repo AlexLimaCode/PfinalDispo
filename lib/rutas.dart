@@ -4,11 +4,13 @@ import 'venta.dart';
 import 'contacto.dart';
 import 'aProveedor.dart';
 import 'aProducto.dart';
+import 'tasks.dart';
 
 class rutas {
   static const String rutaVenta = venta.nombreRuta;
   static const String rutacontacto = contacto.nombreRuta;
   static const String rutaProducto = producto.nombreRuta;
   static const String rutaProveedor = proveedor.nombreRuta;
+  static const String rutaTasks = tasks.nombreRuta;
 }
 // TODO Implement this library.

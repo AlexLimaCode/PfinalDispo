@@ -13,8 +13,16 @@ class producto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffEFC5C5),
       appBar: AppBar(
-        title: Text('Alta de Producto'),
+        backgroundColor: Color(0xffF05151),
+        elevation: 0.0,
+        title: Text(
+          "Alta de Productos",
+          style: TextStyle(
+              fontSize: 28.0, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        centerTitle: true,
       ),
       drawer: navigationDrawer(),
       body: MyCustomForm(),
@@ -198,6 +206,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'Nombre',
             ),
           ),
+          const SizedBox(
+            height: 30,
+          ),
           TextFormField(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _precioCompra,
@@ -207,6 +218,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'Precio',
             ),
           ),
+          const SizedBox(
+            height: 30,
+          ),
           TextFormField(
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _precioVenta,
@@ -215,6 +229,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Precio del producto en venta',
               labelText: 'Precio',
             ),
+          ),
+          const SizedBox(
+            height: 30,
           ),
           Center(
             child: DropdownButton<String>(
@@ -240,6 +257,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               }).toList(),
             ),
           ),
+          const SizedBox(
+            height: 30,
+          ),
           Container(
               alignment: Alignment.center,
               child: Flex(
@@ -249,9 +269,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ElevatedButton(
                         onPressed: () => scanBarcodeNormal(),
                         child: Text('Escanear QR')),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     Text('Producto : $_scanBarcode\n',
                         style: TextStyle(fontSize: 20))
                   ])),
+          const SizedBox(
+            height: 30,
+          ),
           Container(
               padding: const EdgeInsets.only(left: 150.0, top: 40.0),
               child: RaisedButton(

@@ -11,8 +11,16 @@ class proveedor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffEFC5C5),
       appBar: AppBar(
-        title: Text('Alta de Proveedor'),
+        backgroundColor: Color(0xffF05151),
+        elevation: 0.0,
+        title: Text(
+          "Alta de proveedor",
+          style: TextStyle(
+              fontSize: 28.0, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        centerTitle: true,
       ),
       drawer: navigationDrawer(),
       body: MyCustomForm(),
@@ -120,6 +128,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               labelText: 'Nombre',
             ),
           ),
+          const SizedBox(
+            height: 30,
+          ),
           TextFormField(
             keyboardType: const TextInputType.numberWithOptions(decimal: false),
             controller: _telefonoctr,
@@ -128,6 +139,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               hintText: 'Telefono de contacto',
               labelText: 'Telefono',
             ),
+          ),
+          const SizedBox(
+            height: 30,
           ),
           Container(
               padding: const EdgeInsets.only(left: 150.0, top: 40.0),

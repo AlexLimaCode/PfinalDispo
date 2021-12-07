@@ -7,18 +7,18 @@ import 'contacto.dart';
 import 'aProveedor.dart';
 import 'rutas.dart';
 
-class navega extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'navegacion drawer',
-      home: venta(),
-      routes: {
-        rutas.rutaProducto: (context) => producto(),
-        rutas.rutaVenta: (context) => venta(),
-        rutas.rutacontacto: (context) => contacto(),
-        rutas.rutaProveedor: (context) => proveedor(),
-      },
-    );
-  }
-}
+// class navega extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'navegacion drawer',
+//       home: venta(),
+//       routes: {
+//         rutas.rutaProducto: (context) => producto(),
+//         rutas.rutaVenta: (context) => venta(),
+//         rutas.rutacontacto: (context) => contacto(),
+//         rutas.rutaProveedor: (context) => proveedor(),
+//       },
+//     );
+//   }
+// }

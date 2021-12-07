@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:proyectofinal/aProducto.dart';
+import 'package:proyectofinal/contacto.dart';
+import 'package:proyectofinal/venta.dart';
 import 'rutas.dart';
 import 'createDrawerHeader.dart';
 import 'createDrawerBodyItem.dart';
+import 'tasks.dart';
 
 class navigationDrawer extends StatelessWidget {
   @override
@@ -18,7 +21,9 @@ class navigationDrawer extends StatelessWidget {
               icon: Icons.home,
               text: ("Ventas"),
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutaVenta)),
+                  // Navigator.pushReplacementNamed(context, rutas.rutaVenta)),
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => venta()))),
           createDrawerBodyItem(
               icon: Icons.person_add,
               text: ("Alta Proveedor"),
@@ -34,8 +39,13 @@ class navigationDrawer extends StatelessWidget {
           createDrawerBodyItem(
               icon: Icons.contact_mail,
               text: ("Contacto"),
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, rutas.rutacontacto)),
+              onTap: () => Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => contacto()))),
+          createDrawerBodyItem(
+              icon: Icons.pending,
+              text: ("Pendientes"),
+              onTap: () => Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => tasks()))),
         ],
       ),
     );
